@@ -1,0 +1,28 @@
+---
+import Layout from '../layouts/Layout.astro';
+const { slug } = Astro.params;
+
+const res = await fetch(import.meta.env.PUBLIC_URL);
+const [post] = await res.json();
+
+// The getStaticPaths() is required for static Astro sites.
+// If using SSR, you will not need this function.
+export async function getStaticPaths() {
+  let data = await fetch(import.meta.env.PUBLIC_URL);
+  let posts = await data.json();
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post: post },
+  }));
+}
+---
+
+<Layout title="Welcome to Astro.">
+	<main>
+		<article>
+      <h1 set:html={post.title.rendered} />
+      <Fragment set:html={post.content.rendered} />
+    </article>
+	</main>
+</Layout>
