@@ -6,8 +6,8 @@ const { slug } = Astro.params;
 const res = await fetch(import.meta.env.PUBLIC_URL);
 const [post] = await res.json();
 
-The getStaticPaths() is required for static Astro sites.
-If using SSR, you will not need this function.
+// The getStaticPaths() is required for static Astro sites.
+// If using SSR, you will not need this function.
 export async function getStaticPaths() {
   let data = await fetch(import.meta.env.PUBLIC_URL);
   let posts = await data.json();
