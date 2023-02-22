@@ -10,11 +10,12 @@ const res2 = await getCategories({ fields: ["name"] });
 	<main>
 		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
 		<h2>カテゴリー</h2>
+		<button id="test" onclick="test()">テスト</button>
 		<ul role="list" class="link-card-grid">
 			{
 				res2.contents.map((content: any) => (
 					<li>
-						<button onclick="test()">{content.name}</button>
+						<button>{content.name}</button>
 					</li>
 				))
 			}
@@ -36,17 +37,17 @@ const res2 = await getCategories({ fields: ["name"] });
 </Layout>
 <script is:inline>
 	const test = () => {
-	fetch(
-    `https://${import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1/news?filters=category[equals]rsdglv3td1`,
-    {
-      headers: {
-        "X-MICROCMS-API-KEY": `${import.meta.env.VITE_MICROCMS_API_KEY}`,
-      },
-    }
-  )
-  .then((result) => result.json())
-  .then((json) => console.log(json))
-}
+		fetch(
+			`https://${import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1/news?filters=category[equals]rsdglv3td1`,
+			{
+				headers: {
+					"X-MICROCMS-API-KEY": `${import.meta.env.VITE_MICROCMS_API_KEY}`,
+				},
+			}
+		)
+			.then((result) => result.json())
+			.then((json) => console.log(json));
+	};
 </script>
 <style>
 	main {
