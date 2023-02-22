@@ -49,16 +49,3 @@ export const getBlogDetail = async (
 export const getCategories = async (queries?: MicroCMSQueries) => {
   return await client.get<Category>({ endpoint: "categories", queries });
 };
-
-const test = () => {
-  fetch(
-    `https://${import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1/news?filters=category[equals]rsdglv3td1`,
-    {
-      headers: {
-        "X-MICROCMS-API-KEY": "2EPa5f56BnzxuiHaGhRJeCzXAeKhmDCmqb67",
-      },
-    }
-  )
-    .then((result) => result.json())
-    .then((json) => console.log(json));
-};

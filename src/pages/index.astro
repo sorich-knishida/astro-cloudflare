@@ -35,7 +35,7 @@ const res2 = await getCategories({ fields: ["name"] });
 	</main>
 </Layout>
 <script is:inline>
- const test = () => {
+	const test = () => {
 	fetch(
     `https://${import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1/news?filters=category[equals]rsdglv3td1`,
     {
@@ -44,9 +44,9 @@ const res2 = await getCategories({ fields: ["name"] });
       },
     }
   )
-    .then((result) => result.json())
-    .then((json) => console.log(json));
- }
+  .then((result) => result.json())
+  .then((json) => console.log(json))
+}
 </script>
 <style>
 	main {
