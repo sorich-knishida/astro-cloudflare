@@ -1,31 +1,53 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Card from '../components/Card.astro';
-const res = await fetch(import.meta.env.PUBLIC_URL);
-const posts = await res.json();
+import Layout from "../layouts/Layout.astro";
+import Card from "../components/Card.astro";
+import { getBlogs, getCategories } from "../library/microcms";
+const res1 = await getBlogs({ fields: ["id", "title", "category", "tag"] });
+const res2 = await getCategories({ fields: ["name"] });
 ---
 
 <Layout title="Welcome to Astro.">
 	<main>
 		<h1>Welcome to <span class="text-gradient">Astro</span></h1>
-		<p class="instructions">
-			To get started, open the directory <code>src/pages</code> in your project.<br />
-			<strong>Code Challenge:</strong> Tweak the "Welcome to Astro" message above.
-		</p>
+		<h2>カテゴリー</h2>
 		<ul role="list" class="link-card-grid">
 			{
-				posts.map((post) => (
-				<Card
-					href={`/${post.slug}/`}
-					title="Documentation"
-					body="Learn how Astro works and explore the official API docs."
-				/>
+				res2.contents.map((content: any) => (
+					<li>
+						<button onclick="test()">{content.name}</button>
+					</li>
+				))
+			}
+		</ul>
+
+		<h2>記事リスト</h2>
+		<ul role="list" class="link-card-grid">
+			{
+				res1.contents.map((content: any) => (
+					<li>
+						<a href={content.id}>{content.title}</a>
+						<p>カテゴリー: {content.category.name}</p>
+						<p>タグ: {content.tag.name}</p>
+					</li>
 				))
 			}
 		</ul>
 	</main>
 </Layout>
-
+<script is:inline>
+ const test = () => {
+	fetch(
+    `https://${import.meta.env.VITE_MICROCMS_SERVICE_DOMAIN}.microcms.io/api/v1/news?filters=category[equals]rsdglv3td1`,
+    {
+      headers: {
+        "X-MICROCMS-API-KEY": `${import.meta.env.VITE_MICROCMS_API_KEY}`,
+      },
+    }
+  )
+    .then((result) => result.json())
+    .then((json) => console.log(json));
+ }
+</script>
 <style>
 	main {
 		margin: auto;
